@@ -1,112 +1,146 @@
+/* Color Variables
+   this also has images listed for easy change
+*/
+$background-color: #202020;
+$footer-bg: url('/images/footer-bg.jpg');
+$banner-img: url('/images/banner.jpg');
+$balloon-img: url('/images/balloon-bg.jpg');
+$primary-color: #0d6efd;
+$secondary-color: #333;
+$text-color: #ffffff;
+$heading-color: #000000;
+$footer-text-color: rgba(255, 255, 255, .4);
+$footer-heading-color: #FFF;
+$footer-strong-color: rgba(255, 255, 255, .7);
+$divider-color: #303030;
+$default-list-color: rgba(255, 255, 255, .5);
+$border-color: rgba(0, 0, 0, .1);
+$hover-background-color: #0d6efd;
+$hr-border: #ddd;
+$main-border: rgba(0, 0, 0, .2);
+
+// Import for nav rules
+@import 'nav';
+
+// Mixin for generating column widths
+@mixin generate-columns {
+  @for $num from 1 through 12 {
+    .column-#{$num} {
+      width: calc((100% / 12) * $num);
+    }
+  }
+}
+
+// Example mixins without arguments
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Mixin with an argument
+@mixin make-column($width) {
+  width: $width;
+}
+
+// Use the mixins
+@include generate-columns;
+
 // Your styles go here
 body {
-  background: #202020 url('/images/footer-bg.jpg') repeat;
+  background: $background-color $footer-bg repeat;
   min-width: 1200px;
   margin: 0;
   padding: 0;
-}
 
-body,
-input,
-textarea,
-select {
-  font-family: 'Roboto Condensed', sans-serif;
-  font-weight: 300;
-  font-size: 11pt;
-  line-height: 1.75em;
-}
+  &, input, textarea, select {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 11pt;
+    line-height: 1.75em;
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 300;
-}
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 300;
 
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
-  color: inherit;
-  text-decoration: none;
-}
+    a {
+      color: inherit; // Nested under headings
+      text-decoration: none;
+    }
+  }
 
-strong,
-b {
-  font-weight: bold;
-  color: #000000;
-}
+  strong, b {
+    font-weight: bold;
+    color: $heading-color;
+  }
 
-em,
-i {
-  font-style: italic;
-}
+  em, i {
+    font-style: italic;
+  }
 
-a {
-  color: #0d6efd;
-}
+  a {
+    color: $primary-color;
+  }
 
-sub {
-  position: relative;
-  top: 0.5em;
-  font-size: 0.8em;
-}
+  sub {
+    position: relative;
+    top: 0.5em;
+    font-size: 0.8em;
+  }
 
-sup {
-  position: relative;
-  top: -0.5em;
-  font-size: 0.8em;
-}
+  sup {
+    position: relative;
+    top: -0.5em;
+    font-size: 0.8em;
+  }
 
-hr {
-  border: 0;
-  border-top: solid 1px #ddd;
-}
+  hr {
+    border: 0;
+    border-top: solid 1px $hr-border;
+  }
 
-p,
-ul,
-ol,
-dl,
-table {
-  margin-bottom: 1em;
+  p, ul, ol, dl, table {
+    margin-bottom: 1em;
+  }
 }
 
 header {
   margin-bottom: 2em;
   line-height: 1.7em;
+
+  h2 {
+    font-size: 2.5em; // Nested under header
+  }
+
+  .byline {
+    display: block;
+    margin: 0.5em 0 0;
+    padding: 0 0 0.5em;
+    text-transform: uppercase;
+    font-size: 1.4em; // Nested under header
+  }
 }
 
-header h2 {
-  font-size: 2.5em;
-}
-
-header .byline {
-  display: block;
-  margin: 0.5em 0 0 0;
-  padding: 0 0 0.5em 0;
-  text-transform: uppercase;
-  font-size: 1.4em;
-}
-
-section,
-article {
+section, article {
   margin-bottom: 3em;
-}
 
-section > :last-child,
-article > :last-child {
-  margin-bottom: 0;
-}
+  > :last-child {
+    margin-bottom: 0; // Last child selector
+  }
 
-section:last-child,
-article:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 blockquote {
@@ -118,222 +152,149 @@ blockquote {
 
 footer {
   margin-top: 1em;
+
+  h2 {
+    color: $footer-heading-color; // Nested under footer
+  }
 }
 
 .container {
   width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
+  margin: 0 auto;
 
-.container.small {
-  width: 900px;
-}
+  &.small {
+    width: 900px;
+  }
 
-.container.big {
-  width: 100%;
-  max-width: 1500px;
-  min-width: 1200px;
-}
-
-.row section,
-.row article {
-  margin-bottom: 0;
-}
-
-.row [class*='column-'] {
-  padding: 50px 0 0 50px;
-  float: left;
-  box-sizing: border-box;
+  &.big {
+    width: 100%;
+    max-width: 1500px;
+    min-width: 1200px; // Nested under container
+  }
 }
 
 .row {
   margin-left: -50px;
-}
 
-.row:after {
-  content: '';
-  display: block;
-  clear: both;
-  height: 0;
-}
-
-.column-1,
-.column-2,
-.column-3,
-.column-4,
-.column-5,
-.column-6,
-.column-7.column-8,
-.column-9,
-.column-10,
-.column-11,
-.column-12 {
-  width: 100%;
-}
-
-@media all and (min-width: 576px) {
-  .column-1 {
-    width: 8.33333%;
+  section, article {
+    margin-bottom: 0;
   }
 
-  .column-2 {
-    width: 16.66667%;
+  [class*='column-'] {
+    padding: 50px 0 0 50px;
+    float: left;
+    box-sizing: border-box;
+
+    @include generate-columns; // Include the column generation here
   }
 
-  .column-3 {
-    width: 25%;
-  }
-
-  .column-4 {
-    width: 33.33333%;
-  }
-
-  .column-5 {
-    width: 41.66667%;
-  }
-
-  .column-6 {
-    width: 50%;
-  }
-
-  .column-7 {
-    width: 58.33333%;
-  }
-
-  .column-8 {
-    width: 66.66667%;
-  }
-
-  .column-9 {
-    width: 75%;
-  }
-
-  .column-10 {
-    width: 83.33333%;
-  }
-
-  .column-11 {
-    width: 91.66667%;
-  }
-
-  .column-12 {
-    width: 100%;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0; // Clearfix for row
   }
 }
 
 .image {
   display: inline-block;
+
+  img {
+    display: block;
+    width: 100%; // Nested under image
+  }
+
+  &.featured {
+    margin: 0 0 2em;
+  }
+
+  &.full {
+    margin-bottom: 2em;
+  }
+
+  &.left {
+    float: left;
+    margin: 0 2em 2em 0;
+  }
+
+  &.centered {
+    display: block;
+    margin: 0 0 2em;
+
+    img {
+      margin: 0 auto;
+      width: auto; // Nested under centered image
+    }
+  }
 }
 
-.image img {
-  display: block;
-  width: 100%;
-}
-
-.image.featured {
-  display: block;
-  width: 100%;
-  margin: 0 0 2em 0;
-}
-
-.image.full {
-  display: block;
-  width: 100%;
-  margin-bottom: 2em;
-}
-
-.image.left {
-  float: left;
-  margin: 0 2em 2em 0;
-}
-
-.image.centered {
-  display: block;
-  margin: 0 0 2em 0;
-}
-
-.image.centered img {
-  margin: 0 auto;
-  width: auto;
-}
-
-ul.default {
+ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
 
-ul.default li {
-  display: block;
-  padding: 2em 0em 1.25em 0em;
-  border-top: 1px solid #303030;
-}
+  &.default {
+    li {
+      display: block;
+      padding: 2em 0 1.25em;
+      border-top: 1px solid $divider-color;
 
-ul.default li:first-child {
-  padding-top: 0em;
-  border-top: none;
-}
+      &:first-child {
+        padding-top: 0;
+        border-top: none;
+      }
 
-ul.default a {
-  text-decoration: none;
-  color: rgba(255, 255, 255, .5);
-}
+      a {
+        text-decoration: none;
+        color: $default-list-color;
 
-ul.default a:hover {
-  text-decoration: underline;
-}
+        &:hover {
+          text-decoration: underline; // Nested under list item
+        }
+      }
+    }
+  }
 
-ul.style1 {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+  &.style1 {
+    li {
+      padding: 0.60em 0;
+      border-top: 1px solid $border-color;
 
-ul.style1 li {
-  padding: 0.60em 0em;
-  border-top: 1px solid;
-  border-color: rgba(0, 0, 0, .1);
-}
+      &:first-child {
+        padding-top: 0;
+        border-top: none;
+      }
+    }
+  }
 
-ul.style1 li:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
+  &.style2 {
+    li {
+      padding: 1.90em 0 1.60em;
+      border-top: 1px solid $border-color;
 
-ul.style2 {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+      &:first-child {
+        padding-top: 0;
+        border-top: none;
+      }
 
-ul.style2 li {
-  padding: 1.90em 0em 1.60em 0em;
-  border-top: 1px solid;
-  border-color: rgba(0, 0, 0, .1);
-}
+      img {
+        float: left;
+        padding-right: 1em; // Nested under style2 list item
+      }
+    }
+  }
 
-ul.style2 li:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
+  &.style5 {
+    overflow: hidden;
+    margin: 0 0 1em;
+    padding: 0;
 
-ul.style2 img {
-  float: left;
-  padding-right: 1em;
-}
-
-ul.style5 {
-  overflow: hidden;
-  margin: 0em 0em 1em 0em;
-  padding: 0em;
-  list-style: none;
-}
-
-ul.style5 li {
-  float: left;
-  padding: 0.25em 0.25em;
-  line-height: 0;
+    li {
+      float: left;
+      padding: 0.25em;
+      line-height: 0; // Nested under style5 list
+    }
+  }
 }
 
 .button {
@@ -341,168 +302,134 @@ ul.style5 li {
   display: inline-block;
   margin-top: 0.5em;
   padding: 0.50em 1.5em;
-  background: #0d6efd;
+  background: $primary-color;
   border-radius: 6px;
   text-decoration: none;
   text-transform: uppercase;
   font-size: 1.1em;
-  color: #FFF;
+  color: $text-color;
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
   cursor: pointer;
-}
 
-.button:hover {
-  background: #0d6efd;
-  color: #FFF !important;
+  &:hover {
+    background: $hover-background-color; // Nested under button
+    color: $text-color !important;
+  }
 }
 
 .header {
   position: relative;
-  background: #FFF;
-}
+  background: $text-color;
 
-.header .container {
-  position: relative;
-  padding: 4em 0em;
-}
+  .container {
+    position: relative;
+    padding: 4em 0; // Nested under header
+  }
 
-.logo {
-  position: absolute;
-  left: 0em;
-  top: 3em;
-}
+  .logo {
+    position: absolute;
+    left: 0;
+    top: 3em;
 
-.logo a {
-  display: block;
-  text-decoration: none;
-  font-size: 2.8em;
-  font-weight: 600;
-}
-
-.nav {
-  position: absolute;
-  right: 0em;
-  top: 2.2em;
-}
-
-.nav ul {
-  list-style-type: none;
-}
-
-.nav ul li {
-  float: left;
-}
-
-.nav ul li:last-child {
-  padding-right: 0;
-}
-
-.nav ul li a,
-.nav ul li span {
-  display: block;
-  margin-left: 0.7em;
-  padding: 0.80em 1.2em;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.1em;
-  outline: 0;
-  color: #333;
-}
-
-.nav li.active a {
-  background: #0d6efd;
-  border-radius: 5px;
-  color: #FFF;
+    a {
+      display: block;
+      text-decoration: none;
+      font-size: 2.8em;
+      font-weight: 600; // Nested under logo
+    }
+  }
 }
 
 .banner {
   position: relative;
-  padding: 12em 0em;
-  background: url('/images/banner.jpg') no-repeat center;
+  padding: 12em 0;
+  background: $banner-img no-repeat center;
   background-size: cover;
-  color: #fff;
+  color: $text-color;
 }
 
 .page {
   position: relative;
-  background: #fff;
+  background: $text-color;
 }
 
 .main {
-  border-top: 1px solid;
-  border-color: rgba(0, 0, 0, .2);
+  border-top: 1px solid $main-border;
 }
 
-.sidebar header h2 {
-  font-size: 1.6em;
+.sidebar {
+  header {
+    h2 {
+      font-size: 1.6em; // Nested under sidebar header
+    }
+  }
 }
 
 .footer {
   position: relative;
-  color: rgba(255, 255, 255, .4);
-}
+  color: $footer-text-color;
 
-.footer h2 {
-  padding-bottom: 1.5em;
-  font-size: 1.6em;
-  color: #FFF;
-}
+  h2 {
+    color: $footer-heading-color; // Nested under footer
+  }
 
-.footer strong {
-  color: rgba(255, 255, 255, .7);
+  strong {
+    color: $footer-strong-color;
+  }
 }
 
 .copyright {
   position: relative;
-  padding: 3em 0em;
-  border-top: 1px solid #303030;
+  padding: 3em 0;
+  border-top: 1px solid $divider-color;
   letter-spacing: 1px;
   text-align: center;
-  color: rgba(255, 255, 255, .4);
-}
+  color: $footer-text-color;
 
-.copyright a {
-  text-decoration: none;
-  color: rgba(255, 255, 255, .4) !important;
+  a {
+    text-decoration: none;
+    color: $footer-text-color !important; // Nested under copyright
+  }
 }
 
 .marketing {
   position: relative;
-}
 
-.marketing header h2 {
-  font-size: 1.6em;
+  header {
+    h2 {
+      font-size: 1.6em; // Nested under marketing header
+    }
+  }
 }
 
 .featured {
   position: relative;
-}
 
-.featured .divider {
-  border-bottom: 1px solid #303030;
-}
+  .divider {
+    border-bottom: 1px solid $divider-color; // Nested under featured
+  }
 
-.featured .box {
-  background: #FFF;
-  padding: 1.4em;
-  font-size: 0.95em;
-  border-radius: 5px;
+  .box {
+    background: $text-color;
+    padding: 1.4em;
+    font-size: 0.95em;
+    border-radius: 5px; // Nested under box
+  }
 }
 
 .balloon {
   padding: 1.87em;
-  background: url('/images/balloon-bg.jpg') repeat left top;
+  background: $balloon-img repeat left top;
   border-radius: 5px;
   line-height: 180%;
   font-size: 1.2em;
-  color: #333;
+  color: $secondary-color;
+
+  strong {
+    color: $secondary-color !important; // Nested under balloon
+  }
 }
 
 .ballon-bgbtm {
   height: 1.87em;
-}
-
-.balloon strong {
-  color: #333 !important;
 }
